@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:improve_memory/screens/memory_palace_page.dart';
 import 'package:improve_memory/screens/memory_palace_view.dart';
 
 class MemoryPalaceScreen extends StatefulWidget {
@@ -37,8 +38,7 @@ class _UnityDemoScreenState extends State<MemoryPalaceScreen> {
               Navigator.of(context)
                   .push(
                     MaterialPageRoute(
-                      builder: (ctx) => MemoryPalaceView(
-                          url: 'https://my.matterport.com/show/?m=LzWv6sifge9'),
+                      builder: (ctx) => MemoryPalacePage(),
                     ),
                   )
                   .then(((_) => portraitScreen()));
@@ -50,7 +50,8 @@ class _UnityDemoScreenState extends State<MemoryPalaceScreen> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   image: DecorationImage(
-                      image: AssetImage('assets/memory_palaces/1.webp'),
+                      image: AssetImage(
+                          'assets/memory_palaces/home-in-nijmegen-nieuw-west/1.webp'),
                       fit: BoxFit.cover)),
             ),
           ),

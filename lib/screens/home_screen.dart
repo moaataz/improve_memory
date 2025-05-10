@@ -3,7 +3,7 @@ import 'package:improve_memory/screens/flipping_cards_screen.dart';
 import 'package:improve_memory/screens/focus_screen.dart';
 import 'package:improve_memory/screens/math_calculation_screen.dart';
 import 'package:improve_memory/screens/memory_palace_screen.dart';
-import 'package:improve_memory/screens/reading_fast_screen.dart';
+import 'package:improve_memory/screens/reading_fast/reading_fast_screen.dart';
 import 'package:improve_memory/widgets/screen_card.dart';
 
 class MyHomePage extends StatefulWidget {

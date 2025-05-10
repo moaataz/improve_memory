@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:improve_memory/providers/app_data_provider.dart';
 import 'package:improve_memory/screens/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,7 +12,12 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(const MyApp());
+  final sharedPreferences = await SharedPreferences.getInstance();
+  ;
+  appDataProvider = StateNotifierProvider<AppDataProvider, SharedPreferences>(
+    (fn) => AppDataProvider(sharedPreferences),
+  );
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
