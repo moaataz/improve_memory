@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:improve_memory/constants/objects.dart';
 import 'package:improve_memory/constants/reading_questions.dart';
+import 'package:improve_memory/resources/asset_resource.dart';
+import 'package:improve_memory/resources/button_style_resource.dart';
+import 'package:improve_memory/resources/color_resource.dart';
+import 'package:improve_memory/resources/extensions.dart';
+import 'package:improve_memory/resources/string_resource.dart';
+import 'package:improve_memory/resources/text_styles.dart';
 import 'package:improve_memory/screens/reading_fast/improve_reading_speed.dart';
+import 'package:improve_memory/resources/edge_insets_manager.dart';
 
 class ReadingFastScreen extends StatelessWidget {
   const ReadingFastScreen({super.key});
@@ -9,8 +16,8 @@ class ReadingFastScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('reading fast'),
-        backgroundColor: Colors.blue,
+        title: Text(StringResource.readingFast),
+        backgroundColor: ColorResource.blue,
       ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -28,7 +35,7 @@ class ReadingFastScreen extends StatelessWidget {
                           randomizer.nextInt(threeLinesQuestions.length)];
                       stopwatch.start();
                       return Container(
-                        padding: EdgeInsets.all(16),
+                        padding: e_16_all,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -43,11 +50,9 @@ class ReadingFastScreen extends StatelessWidget {
                                     Navigator.of(context).pop(wpm);
                                     stopwatch.stop();
                                   },
-                                  style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.horizontal(
-                                              left: Radius.circular(30)))),
-                                  child: Text('yes'),
+                                  style: ButtonStyleResource
+                                      .circularLeftButtonStyle,
+                                  child: Text(StringResource.yes),
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
@@ -56,11 +61,9 @@ class ReadingFastScreen extends StatelessWidget {
                                     Navigator.of(context).pop(wpm);
                                     stopwatch.stop();
                                   },
-                                  style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.horizontal(
-                                              right: Radius.circular(30)))),
-                                  child: Text('no'),
+                                  style: ButtonStyleResource
+                                      .circularRightButtonStyle,
+                                  child: Text(StringResource.no),
                                 )
                               ],
                             )
@@ -74,15 +77,15 @@ class ReadingFastScreen extends StatelessWidget {
                       context: context,
                       builder: (ctx) => AlertDialog(
                         title: Text(
-                          'your reading speed is ${wpm.toInt()} words per minute',
-                          style: TextStyle(fontSize: 20),
+                          StringResource.yourReadingSpeedIsWpm(wpm),
+                          style: h3TextStyle,
                         ),
                         actions: [
                           ElevatedButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text('got it!'))
+                              child: Text(StringResource.gotIt))
                         ],
                       ),
                     );
@@ -92,22 +95,20 @@ class ReadingFastScreen extends StatelessWidget {
                   width: 200,
                   height: 200,
                   decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 209, 209, 209),
+                      color: ColorResource.grey209,
                       borderRadius: BorderRadius.circular(10)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        'assets/images/speed_test_icon.png',
-                        width: 100,
-                        height: 100,
+                      S100Image.asset(
+                        AssetIcon.speedTest,
                       ),
                       SizedBox(
                         height: 5,
                       ),
                       Text(
-                        'test your reading\nspeed',
-                        style: TextStyle(fontSize: 20),
+                        StringResource.testYourReadingSpeed,
+                        style: h3TextStyle,
                         textAlign: TextAlign.center,
                       )
                     ],
@@ -129,23 +130,21 @@ class ReadingFastScreen extends StatelessWidget {
                   width: 200,
                   height: 200,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 209, 209, 209),
+                    color: ColorResource.grey209,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        'assets/images/dumbbell_icon.png',
-                        width: 100,
-                        height: 100,
+                      S100Image.asset(
+                        AssetIcon.dumbbell,
                       ),
                       SizedBox(
                         height: 5,
                       ),
                       Text(
-                        'start improving reading\nspeed',
-                        style: TextStyle(fontSize: 20),
+                        StringResource.startImprovingReadingSpeed,
+                        style: h3TextStyle,
                         textAlign: TextAlign.center,
                       )
                     ],

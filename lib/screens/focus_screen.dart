@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:improve_memory/resources/asset_resource.dart';
+import 'package:improve_memory/resources/edge_insets_manager.dart';
+import 'package:improve_memory/resources/string_resource.dart';
 import 'package:improve_memory/widgets/counter.dart';
+import '../resources/extensions.dart';
 import 'package:lottie/lottie.dart';
 
 class FocusScreen extends StatefulWidget {
@@ -52,7 +56,7 @@ class _FocusScreenState extends State<FocusScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('start a focus session')),
+      appBar: AppBar(title: Text(StringResource.startFocusSession)),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -63,7 +67,7 @@ class _FocusScreenState extends State<FocusScreen>
               radius: 150,
               backgroundColor: const Color.fromARGB(80, 255, 0, 0),
               child: Lottie.asset(
-                'assets/animations/focus_animation.lottie.json',
+                LottieManager.focusAnimation,
                 controller: _controller,
                 onLoaded: (compositon) {
                   _controller.value = 20.0;
@@ -86,14 +90,14 @@ class _FocusScreenState extends State<FocusScreen>
                   Counter(pickedDuration: duration)
                 else
                   ElevatedButton(
-                    child: Text('start'),
+                    child: Text(StringResource.start),
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (ctx) => Center(
                           child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            height: MediaQuery.of(context).size.height * 0.27,
+                            width: context.width * 0.8,
+                            height: context.height * 0.27,
                             child: Card(
                               child: Form(
                                 key: _formKey,
@@ -166,7 +170,7 @@ class _FocusScreenState extends State<FocusScreen>
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text('cancel'),
+                                          child: Text(StringResource.cancel),
                                         ),
                                         ElevatedButton(
                                           onPressed: () {
@@ -178,7 +182,7 @@ class _FocusScreenState extends State<FocusScreen>
                                                 const Color.fromARGB(
                                                     255, 255, 237, 232),
                                           ),
-                                          child: Text('accept'),
+                                          child: Text(StringResource.accept),
                                         )
                                       ],
                                     )
@@ -189,11 +193,9 @@ class _FocusScreenState extends State<FocusScreen>
                           ),
                         ),
                       );
-                      // _controller.value = 0.0;
-                      // _controller.forward();
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 50),
+                      padding: symmetric_h50_v0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),

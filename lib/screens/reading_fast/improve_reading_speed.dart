@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:improve_memory/resources/asset_resource.dart';
+import 'package:improve_memory/resources/extensions.dart';
+import 'package:improve_memory/resources/string_resource.dart';
+import 'package:improve_memory/resources/edge_insets_manager.dart';
+import 'package:improve_memory/resources/text_styles.dart';
 import 'package:improve_memory/screens/reading_fast/eye_shot_retention.dart';
-import 'package:improve_memory/screens/reading_fast/eye_skimming_screen.dart';
 import 'package:improve_memory/screens/reading_fast/zigzag_reading.dart';
+import 'package:improve_memory/screens/reading_fast_training_screen.dart';
 
 class ImprovingReadingSpeed extends StatelessWidget {
   const ImprovingReadingSpeed({super.key});
@@ -10,10 +15,10 @@ class ImprovingReadingSpeed extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('improving reading speed'),
+        title: Text(StringResource.improvingReadingSpeed),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: e_8_all,
         child: Column(
           spacing: 15,
           children: [
@@ -26,49 +31,40 @@ class ImprovingReadingSpeed extends StatelessWidget {
                 );
               },
               leading: Text(
-                '1234',
-                style: TextStyle(
-                    fontSize: 30,
-                    color: const Color.fromARGB(255, 133, 54, 244),
-                    fontWeight: FontWeight.bold),
+                StringResource.oneToFour,
+                style: h1PurpleTextStyle,
               ),
-              title: 'increase eye shot retention from numbers',
+              title: StringResource.increaseEyeShotRetentionFromNumbers,
             ),
             ExerciseItem(
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (ctx) => EyeSkimmingScreen(),
+                    builder: (ctx) => ReadingFastTrainingScreen(),
                   ),
                 );
               },
-              leading: Image.asset(
-                'assets/images/skim_icon.png',
-                width: 100,
+              leading: S100Image.asset(
+                AssetIcon.skim,
               ),
-              title: 'eye skimming training',
+              title: StringResource.eyeSkimmingTraining,
             ),
-            // TODO: هعمل اللي في صفحة 136 من كتاب القراءة السريعة
-
             ExerciseItem(
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (ctx) => ZigZagReading()));
               },
-              leading: Image.asset(
-                'assets/images/zigzag_icon.png',
-                width: 100,
+              leading: S100Image.asset(
+                AssetIcon.zigzag,
               ),
-              title: 'zigzag eye movement',
+              title: StringResource.zigzagEyeMovement,
             ),
-            // TODO: هطبق اللي موجود في صفحة 187
             ExerciseItem(
               onPressed: () {},
-              leading: Image.asset(
-                'assets/images/metronome_icon.png',
-                width: 100,
+              leading: S100Image.asset(
+                AssetIcon.metronome,
               ),
-              title: 'Rhythmic pendulum exercise',
+              title: StringResource.rhythmicPendulumExercise,
             ),
           ],
         ),
@@ -104,7 +100,7 @@ class ExerciseItem extends StatelessWidget {
             width: double.infinity,
             height: 90,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: e_8_all,
               child: Row(
                 children: [
                   CircleAvatar(
@@ -115,7 +111,7 @@ class ExerciseItem extends StatelessWidget {
                     child: ListTile(
                       title: Text(
                         title,
-                        style: TextStyle(fontSize: 15),
+                        style: h4TextStyle,
                       ),
                     ),
                   )

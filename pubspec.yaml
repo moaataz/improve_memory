@@ -49,6 +49,8 @@ dependencies:
   flutter_pdfview: ^1.4.0+1
   file_picker:
   panorama_viewer: ^2.0.4
+  read_pdf_text: ^0.3.1
+  sqflite: ^2.4.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -100,10 +102,8 @@ flutter:
     - assets/images/blank_card.png
     - assets/images/cards/
 
-    - assets/memory_palaces/1.webp
-    - assets/memory_palaces/2.webp
-    - assets/memory_palaces/3.webp
     - assets/memory_palaces/home-in-nijmegen-nieuw-west/
+    - assets/memory_palaces/home-in-qafa/
     
     - assets/animations/focus_animation.lottie.json
   #   - images/a_dot_ham.jpeg

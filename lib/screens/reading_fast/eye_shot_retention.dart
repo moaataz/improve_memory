@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:improve_memory/constants/objects.dart';
 import 'package:improve_memory/providers/app_data_provider.dart';
+import 'package:improve_memory/resources/color_resource.dart';
+import 'package:improve_memory/resources/edge_insets_manager.dart';
+import 'package:improve_memory/resources/string_resource.dart';
+import 'package:improve_memory/resources/text_styles.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class IncreaseEyeShotRetentionScreen extends ConsumerStatefulWidget {
@@ -21,14 +25,14 @@ class _IncreaseEyeShotRetentionScreenState
     int wpm = ref.watch(appDataProvider.notifier).wpm;
     return Scaffold(
       appBar: AppBar(
-        title: Text('increase eye shot retention'),
+        title: Text(StringResource.increaseEyeShotRetention),
         actions: [
           IconButton(
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (ctx) => AlertDialog(
-                  title: Text('select wpm speed'),
+                  title: Text(StringResource.selectWpmSpeed),
                   content: SizedBox(
                     width: 70,
                     height: 80,
@@ -47,7 +51,7 @@ class _IncreaseEyeShotRetentionScreenState
                           },
                           child: Text(
                             (wpmList[i]).toString(),
-                            style: TextStyle(fontSize: 20),
+                            style: h3TextStyle,
                           ),
                         ),
                       ),
@@ -84,7 +88,7 @@ class _IncreaseEyeShotRetentionScreenState
                       fieldBoolean = !fieldBoolean;
                     });
                   },
-                  child: Text('scramble'),
+                  child: Text(StringResource.scramble),
                 ),
                 IconButton(
                   onPressed: () {
@@ -156,29 +160,8 @@ class _NumberGuessRowState extends State<NumberGuessRow> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Spacer(),
-        // IconButton(
-        //   onPressed: () {
-        //     if (length > 6) {
-        //       return;
-        //     }
-        //     setState(() {
-        //       length += 1;
-        //       randomNumberValue = randomNumber(length);
-        //     });
-        //   },
-        //   icon: Icon(Icons.add),
-        // ),
-        // IconButton(
-        //   onPressed: () {
-        //     if (length > 1) {
-        //       length -= 1;
-        //     }
-        //     randomNumberValue = randomNumber(length);
-        //   },
-        //   icon: Icon(Icons.remove),
-        // ),
         Container(
-          padding: const EdgeInsets.all(8.0),
+          padding: e_8_all,
           width: 80,
           alignment: Alignment.center,
           child: Stack(
@@ -190,7 +173,7 @@ class _NumberGuessRowState extends State<NumberGuessRow> {
               ),
               if (!hidden)
                 Container(
-                  color: Colors.grey,
+                  color: ColorResource.grey,
                   width: 8 * widget.length.toDouble(),
                   height: 20 * widget.verticalLength.toDouble(),
                 )
@@ -198,7 +181,7 @@ class _NumberGuessRowState extends State<NumberGuessRow> {
           ),
         ),
         Container(
-          color: Colors.grey[200],
+          color: ColorResource.grey200,
           height: 20 * widget.verticalLength.toDouble(),
           width: 70,
           child: TextField(

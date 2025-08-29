@@ -1,6 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:improve_memory/resources/asset_resource.dart';
+import 'package:improve_memory/resources/extensions.dart';
+import 'package:improve_memory/resources/string_resource.dart';
+import 'package:improve_memory/widgets/flipping_card_button_text.dart';
 import 'package:improve_memory/widgets/card_chip.dart';
 import 'package:improve_memory/widgets/card_item.dart';
 
@@ -20,17 +24,26 @@ class _FlippingCardsScreenState extends State<FlippingCardsScreen> {
   final ValueNotifier<Duration> notifier =
       ValueNotifier<Duration>(Duration(seconds: 7));
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        notifier.value = Duration(seconds: notifier.value.inSeconds - 1);
-      });
-      if (notifier.value == Duration.zero) {
-        setState(() {
-          isFlipped = !isFlipped;
-        });
-        timer.cancel();
-      }
+    timer = Timer.periodic(
+      Duration(seconds: 1),
+      (timer) => countDown(timer),
+    );
+  }
+
+  void flip(Timer timer) {
+    setState(() {
+      isFlipped = !isFlipped;
     });
+    timer.cancel();
+  }
+
+  void countDown(Timer timer) {
+    setState(() {
+      notifier.value = Duration(seconds: notifier.value.inSeconds - 1);
+    });
+    if (notifier.value == Duration.zero) {
+      flip(timer);
+    }
   }
 
   bool get allFlipped {
@@ -62,7 +75,7 @@ class _FlippingCardsScreenState extends State<FlippingCardsScreen> {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         title: Text(
-          'memory quiz screen',
+          StringResource.memoryQuizScreen,
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -84,9 +97,8 @@ class _FlippingCardsScreenState extends State<FlippingCardsScreen> {
                         for (int i = 1; i <= 16; i++)
                           CardChip(
                             cardCount: 2 * i,
-                            icon: Image.asset(
-                              'assets/images/card_item_icon.png',
-                              width: 40,
+                            icon: S40Image.asset(
+                              AssetIcon.cardItem,
                             ),
                             onPressed: (val) {
                               setState(() {
@@ -120,9 +132,8 @@ class _FlippingCardsScreenState extends State<FlippingCardsScreen> {
                             i++)
                           Stack(
                             children: [
-                              Image.asset(
-                                'assets/images/blank_card.png',
-                                width: 50,
+                              S50Image.asset(
+                                AssetIcon.blankCard,
                               ),
                             ],
                           )
@@ -142,12 +153,9 @@ class _FlippingCardsScreenState extends State<FlippingCardsScreen> {
                         });
                       }
                     },
-              child: Text(
-                remainingSeconds == 0
-                    ? allFlipped
-                        ? 'restart'
-                        : 'show'
-                    : remainingSeconds.toString(),
+              child: FlippingCardButtonText(
+                remainingSeconds: remainingSeconds,
+                allFlipped: allFlipped,
               ),
             )
           : null,

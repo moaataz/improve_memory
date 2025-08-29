@@ -3,6 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:improve_memory/resources/asset_resource.dart';
+import 'package:improve_memory/resources/color_resource.dart';
+import 'package:improve_memory/resources/edge_insets_manager.dart';
+import 'package:improve_memory/resources/extensions.dart';
+import 'package:improve_memory/resources/text_styles.dart';
 
 class ZigZagReading extends StatefulWidget {
   const ZigZagReading({super.key});
@@ -20,25 +25,10 @@ class _ZigZagReadingState extends State<ZigZagReading> {
   ByteData? loadedRootBundleFile;
   AssetImage? info;
 
-  // Future<void> _pickPDF() async {
-  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
-  //     type: FileType.custom,
-  //     allowedExtensions: ['pdf'],
-  //   );
-
-  //   if (result != null) {
-  //     setState(() {
-  //       pdfFile = File(result.xFiles[0].path);
-
-  //       // widget.filePath = result.files.single.path!;
-  //     });
-  //   }
-  // }
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
-      loadedRootBundleFile =
-          await rootBundle.load('assets/pdf/reading_fast.pdf');
+      loadedRootBundleFile = await rootBundle.load(PdfFile.readingFast);
       if (mounted) {
         setState(() {});
         info = await showModalBottomSheet<AssetImage>(
@@ -220,7 +210,7 @@ class _SelectZigZagShapeState extends State<SelectZigZagShape> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: e_8_all,
             child: Row(
               children: [
                 Text('select category'),
@@ -239,8 +229,8 @@ class _SelectZigZagShapeState extends State<SelectZigZagShape> {
                           borderRadius: BorderRadius.circular(30)),
                       selected: selectedChip == chipValue,
                       color: WidgetStateProperty.all(selectedChip == chipValue
-                          ? Colors.blue
-                          : Colors.white),
+                          ? ColorResource.blue
+                          : ColorResource.white),
                     );
                   }).toList(),
                 ),
@@ -262,20 +252,20 @@ class _SelectZigZagShapeState extends State<SelectZigZagShape> {
                       Navigator.of(context).pop(entry.value);
                     },
                     child: Container(
-                      height: MediaQuery.of(context).size.height * 0.23,
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: context.height * 0.23,
+                      width: context.width * 0.4,
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: entry.value, fit: BoxFit.cover)),
+                        image: DecorationImage(
+                          image: entry.value,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                       alignment: Alignment.topLeft,
                       child: Container(
-                        color: Colors.white,
+                        color: ColorResource.white,
                         child: Text(
                           entry.key,
-                          style: TextStyle(
-                              color: Colors.deepOrange,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24),
+                          style: h2OrangeTextStyle,
                         ),
                       ),
                     ),
