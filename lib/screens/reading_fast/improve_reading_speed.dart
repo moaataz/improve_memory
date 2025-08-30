@@ -49,23 +49,6 @@ class ImprovingReadingSpeed extends StatelessWidget {
               ),
               title: StringResource.eyeSkimmingTraining,
             ),
-            ExerciseItem(
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (ctx) => ZigZagReading()));
-              },
-              leading: S100Image.asset(
-                AssetIcon.zigzag,
-              ),
-              title: StringResource.zigzagEyeMovement,
-            ),
-            ExerciseItem(
-              onPressed: () {},
-              leading: S100Image.asset(
-                AssetIcon.metronome,
-              ),
-              title: StringResource.rhythmicPendulumExercise,
-            ),
           ],
         ),
       ),

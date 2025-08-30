@@ -1,6 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:improve_memory/models/database.dart';
+import 'package:improve_memory/models/memory_palace.dart';
+import 'package:improve_memory/screens/add_palace_screen.dart';
 import 'package:improve_memory/screens/memory_palace_page.dart';
+import 'package:path/path.dart';
 
 class MemoryPalaceScreen extends StatefulWidget {
   const MemoryPalaceScreen({Key? key}) : super(key: key);
@@ -10,6 +16,7 @@ class MemoryPalaceScreen extends StatefulWidget {
 }
 
 class _UnityDemoScreenState extends State<MemoryPalaceScreen> {
+  List<Map<String, dynamic>> memoryPalaces = [];
   void portraitScreen() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,
@@ -18,7 +25,20 @@ class _UnityDemoScreenState extends State<MemoryPalaceScreen> {
   }
 
   @override
+  void initState() {
+    SQLDatabase sqlDatabase = SQLDatabase();
+    Future.delayed(Duration.zero, () async {
+      memoryPalaces = await sqlDatabase.getMemoryPalaces();
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(memoryPalaces);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -26,60 +46,50 @@ class _UnityDemoScreenState extends State<MemoryPalaceScreen> {
         ),
         backgroundColor: Colors.blue,
       ),
-      body: Column(
-        children: [
-          // https://my.matterport.com/show/?m=LzWv6sifge9
-          GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .push(
-                      MaterialPageRoute(
-                        builder: (ctx) => MemoryPalacePage(
-                          index: 0,
-                        ),
-                      ),
-                    )
-                    .then(((_) => portraitScreen()));
-              },
-              child: Card(
-                child: ListTile(
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: Image.asset(
-                      'assets/memory_palaces/home-in-nijmegen-nieuw-west/1.webp',
-                      width: 80,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
+      body: ListView.builder(
+        itemCount: memoryPalaces.length,
+        itemBuilder: (ctx, i) {
+          final file = Image.file(
+            File(
+              join(
+                memoryPalaces[i]['file_path'],
+                '1${memoryPalaces[i]['file_ext']}',
+              ),
+            ),
+          );
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (ctx) => MemoryPalacePage(
+                    memoryPalace: MemoryPalace.fromMap(memoryPalaces[i]),
                   ),
-                  title: Text('home in nijmegen nieuw west'),
                 ),
-              )),
-          GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (ctx) => MemoryPalacePage(
-                      index: 1,
-                    ),
-                  ),
-                );
-              },
+              );
+            },
+            child: SizedBox(
+              width: double.infinity,
               child: Card(
-                child: ListTile(
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: Image.asset(
-                      'assets/memory_palaces/home-in-qafa/1.webp',
-                      width: 80,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  title: Text('home in qafa'),
-                ),
-              )),
-        ],
+                child: file,
+              ),
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (ctx) => AddPalaceScreen()))
+              .then((_) {
+            setState(() {});
+          });
+        },
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        backgroundColor: Colors.blue,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }
